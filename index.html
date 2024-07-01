@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" onclick="switchShowSeconds()">
+<style>
+    body {
+        background-color: black;
+        color: gray;
+        font-family: monospace;
+    }
+
+    .date {
+        font-size: 5em;
+    }
+
+    .time {
+        font-size: 12em;
+    }
+
+    .centered {
+        position: fixed;
+        left: 50%;
+        transform: translate(-50%, 0%);
+    }
+
+</style>
+<body onload="startTime()">
+<h1 id="date" class="centered date"></h1>
+<h1 id="time" class="centered time"></h1>
+<script>
+    let showSeconds = false;
+
+    function switchShowSeconds() {
+        showSeconds = !showSeconds;
+    }
+
+    function leadingZeros(i) {
+        if (i < 10) {
+            i = `0${i}`
+        }
+        return i;
+    }
+
+    function startTime() {
+        const today = new Date();
+        let day = leadingZeros(today.getDate());
+        let month = leadingZeros(today.getMonth() + 1);
+        let year = today.getFullYear();
+        let hours = today.getHours();
+        let minutes = leadingZeros(today.getMinutes());
+        let time = ""
+        if (showSeconds) {
+            let seconds = leadingZeros(today.getSeconds());
+            time = `${hours}:${minutes}:${seconds}`
+        } else {
+            time = `${hours}:${minutes}`
+        }
+
+        document.getElementById('date').innerHTML = `${year}-${month}-${day}`;
+        document.getElementById('time').innerHTML = time;
+        setTimeout(startTime, 1000);
+    }
+</script>
+</body>
+</html>
