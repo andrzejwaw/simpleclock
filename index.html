@@ -28,11 +28,16 @@
     }
 
 </style>
-<body onload="startTime()">
+<body>
 <h1 id="date" class="centered date"></h1>
 <h1 id="time" class="centered time"></h1>
 <script>
-    let showSeconds = false;
+    let showSeconds = true;
+
+    window.onload = function () {
+        refresh();
+        setInterval(refresh, 1000);
+    }
 
     function leadingZeros(i) {
         if (i < 10) {
@@ -42,6 +47,9 @@
     }
 
     function refresh() {
+        if (document.hidden)
+            return;
+
         const now = new Date();
         let hours = now.getHours();
         let minutes = leadingZeros(now.getMinutes());
@@ -53,11 +61,6 @@
     function switchShowSeconds() {
         showSeconds = !showSeconds;
         refresh();
-    }
-
-    function startTime() {
-        refresh();
-        setTimeout(startTime, 1000);
     }
 </script>
 </body>
